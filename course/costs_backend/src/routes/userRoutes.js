@@ -9,32 +9,9 @@ const {
   getByEmail,
   insertUserDB,
 } = require("../model/users");
+const { checkToken } = require("../controller/validation");
 
 const router = require("express").Router();
-
-function checkToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ msg: "Acesso negado" });
-  }
-  try {
-    const secret = process.env.SECRET;
-    console.log(1);
-    jwt.verify(token, secret, (err) => {
-      if (err) {
-        res.status(401).json({ msg: "Acesso negado" });
-        return;
-      }
-      next();
-    });
-  } catch {
-    (e) => {
-      res.status(401).json({ msg: "Acesso negado" });
-    };
-  }
-}
 
 router.get("/", checkToken, async (req, res) => {
   res.json(await getUsers());
@@ -82,7 +59,10 @@ router.post("/login", async (req, res) => {
       {
         id: user.id,
       },
-      secret
+      secret,
+      {
+        expiresIn: 600,
+      }
     );
 
     res.status(200).json({ msg: "Logado com sucesso", token });
