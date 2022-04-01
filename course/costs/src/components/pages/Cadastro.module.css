@@ -1,0 +1,21 @@
+.form_container{
+    width: 100vw;
+    height: 100vh;
+    background-color: gainsboro;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form{
+    width: 500px;
+    background-color: white;
+    border: solid 2px gray;
+    padding: 20px;
+}
+.form h1{
+    width: 100%;
+    text-align: center;
+}
+.form input{
+    border: black solid 1px;
+}

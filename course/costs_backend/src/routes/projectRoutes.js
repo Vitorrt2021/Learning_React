@@ -60,30 +60,23 @@ router.post("/", checkToken, async (req, res) => {
 
 router.delete("/:projectId", checkToken, async (req, res) => {
   try {
-    console.log(1);
-
     const project_id = req.params.projectId;
     const user_id = req.userId;
 
-    console.log(1);
     const project = await getProject(project_id, user_id);
 
-    console.log(1);
     if (!project) {
       res.json({ msg: "Falha na deleção" });
       return false;
     }
 
-    console.log(1);
     const deleteID = await deleteProject(project_id);
 
-    console.log(1);
     if (deleteID) {
       res.json({ msg: "Removido com sucesso", project });
       return true;
     }
 
-    console.log(1);
     res.json({ msg: "Falha na deleção" });
     return false;
   } catch {
