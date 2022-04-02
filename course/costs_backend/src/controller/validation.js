@@ -1,19 +1,18 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const errorHandler = require("./errorHandler");
 const validation = {
   checkToken: (req, res, next) => {
     // const authHeader = req.headers["authorization"];
     // const token = authHeader && authHeader.split(" ")[1];
     const token = req.cookies["token"];
     if (!token) {
-      return res.status(401).json({ msg: "Acesso negado" });
+      throw new errorHandler.Unauthorized("Acesso negado");
     }
     const secret = process.env.SECRET;
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
-        res.status(401).json({ msg: "Acesso negado" });
-        return false;
+        throw new errorHandler.Unauthorized("Acesso negado");
       }
       req.userId = decoded.id;
       next();

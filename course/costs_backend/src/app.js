@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+require("express-async-errors");
+
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -21,18 +23,18 @@ app.use("/users/", userRoutes);
 app.use("/projects/", projectRoutes);
 app.use("/services/", serviceRoutes);
 
-// app.use((error, req, res, next) => {
-//   if (error && error.statusCode) {
-//     res.status(error.statusCode).json({
-//       statusCode: error.statusCode,
-//       message: error.message,
-//     });
-//   } else {
-//     res.status(200).json({
-//       statusCode: 500,
-//       message: "InternalServerError",
-//     });
-//   }
-// });
+app.use((error, req, res, next) => {
+  if (error && error.statusCode) {
+    res.status(error.statusCode).json({
+      statusCode: error.statusCode,
+      message: error.message,
+    });
+  } else {
+    res.status(200).json({
+      statusCode: 500,
+      message: "InternalServerError",
+    });
+  }
+});
 
 module.exports = app;

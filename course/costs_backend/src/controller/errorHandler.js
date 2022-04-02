@@ -5,13 +5,31 @@ class InternalServerError extends Error {
     this.statusCode = 500;
   }
 }
-
-const controller = (req, res) => {
-  throw new InternalServerError("erro ss");
-};
-
-// 401 sem autorização
+class NotFound extends Error {
+  constructor(msg) {
+    super(msg);
+    this.name = "NotFound";
+    this.statusCode = 404;
+  }
+}
+class BadRequest extends Error {
+  constructor(msg) {
+    super(msg);
+    this.name = "BadRequest";
+    this.statusCode = 400;
+  }
+}
+class Unauthorized extends Error {
+  constructor(msg) {
+    super(msg);
+    this.name = "Unauthorized";
+    this.statusCode = 401;
+  }
+}
 
 module.exports = {
   InternalServerError,
+  NotFound,
+  BadRequest,
+  Unauthorized,
 };
