@@ -16,10 +16,17 @@ router.get("/all/:projectId", checkToken, async (req, res) => {
     const user_id = req.userId;
     const services = await getServices(project_id, user_id);
     res.json({ msg: "Success", services });
-  } catch {
-    (err) => {
-      res.json({ mgs: "Erro", err });
-    };
+  } catch (err) {
+    if (error && error.statusCode) {
+      res.status(error.code).send(error);
+    }else{
+      this.name = "InternalServerError";
+      this.statusCode = 500;
+      res.status(500).json({
+        statusCode: 500,
+        message : "InternalServerError"
+      })
+    }
   }
 });
 

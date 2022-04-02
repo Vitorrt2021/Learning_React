@@ -64,8 +64,8 @@ router.post("/login", async (req, res) => {
         expiresIn: 600,
       }
     );
-
-    res.status(200).json({ msg: "Logado com sucesso", token });
+    res.cookie("token", token, { maxAge: 900000, httpOnly: true });
+    res.status(200).json({ msg: "Logado com sucesso" });
   } catch {
     (e) => {
       console.log(e);
