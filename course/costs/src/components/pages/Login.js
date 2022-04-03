@@ -1,9 +1,6 @@
-import Input from "../form/Input";
-import SubmitButton from "../form/SubmitButton";
 import styles from "./Login.module.css";
-// import { Link } from "react-router-dom";
 import { useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 function Login() {
   const [login, setLogin] = useState({});
 
@@ -12,6 +9,13 @@ function Login() {
   }
   function submit(e) {
     e.preventDefault();
+
+    const { email, password } = login;
+    if (!email || !password) {
+      alert("Necessário preencher todos os inputs");
+      return false;
+    }
+
     const requestOptions = {
       method: "POST",
       headers: {
@@ -31,23 +35,33 @@ function Login() {
     <div className={styles.form_container}>
       <form onSubmit={submit} className={styles.form}>
         <h1>Login</h1>
-        <Input
-          type="email"
-          text="Email"
-          name="email"
-          handleOnChange={handleChange}
-          placeholder="Email"
-        />
-        <Input
-          type="password"
-          text="Senha"
-          name="password"
-          handleOnChange={handleChange}
-        />
 
-        <SubmitButton text="Entrar" />
+        <div className={styles.input_container}>
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            text="Email"
+            name="email"
+            onChange={handleChange}
+            placeholder="Email"
+          />
+        </div>
 
-        {/* <Link to="/cadastrar">Cadastrar</Link> */}
+        <div className={styles.input_container}>
+          <label htmlFor="password">Senha</label>
+
+          <input
+            id="password"
+            type="password"
+            text="Senha"
+            name="password"
+            onChange={handleChange}
+          />
+        </div>
+
+        <button className={styles.btn}>Login</button>
+        <Link to="/register">Cadastrar</Link>
       </form>
     </div>
   );

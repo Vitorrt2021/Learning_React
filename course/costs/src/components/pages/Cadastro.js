@@ -2,8 +2,10 @@ import { useState } from "react";
 import Input from "../form/Input";
 import SubmitButton from "../form/SubmitButton";
 import styles from "./Cadastro.module.css";
-
+import { useNavigate } from "react-router-dom";
 function Cadastro() {
+  const history = useNavigate();
+
   const [register, setRegister] = useState({});
   function handleChange(e) {
     setRegister({
@@ -38,6 +40,9 @@ function Cadastro() {
         console.log(data);
       })
       .catch((err) => console.log(err));
+    history("/", {
+      state: { message: "Projeto criado com sucesso" },
+    });
   }
   return (
     <div className={styles.form_container}>

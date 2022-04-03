@@ -18,6 +18,10 @@ router.get("/", checkToken, async (req, res) => {
   res.json(await getUsers());
 });
 
+router.get("/isconnect", checkToken, (req, res) => {
+  res.json({ message: "Is connect", result: true });
+});
+
 router.post("/register", async (req, res) => {
   const { email, password, first_name, last_name } = req.body;
 
@@ -61,7 +65,7 @@ router.post("/login", async (req, res) => {
     }
   );
   res.cookie("token", token, { maxAge: 900000, httpOnly: true });
-  res.status(200).json({ msg: "Logado com sucesso" });
+  res.status(200).json({ message: "Logado com sucesso" });
 });
 
 module.exports = router;

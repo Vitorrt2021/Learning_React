@@ -10,6 +10,8 @@ const errorHandler = require("../controller/errorHandler");
 
 const router = require("express").Router();
 
+//TODO passar as funções para o controller
+
 router.get("/all/:projectId", checkToken, async (req, res) => {
   const project_id = req.params.projectId;
   const user_id = req.userId;
